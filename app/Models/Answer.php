@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Question;
 
 class Answer extends Model
 {
@@ -13,4 +14,8 @@ class Answer extends Model
     	'answer',
     	'is_correct',
     ];
+
+    public function question() {
+    	return $this->belongsTo(Question::class);
+    }
 }

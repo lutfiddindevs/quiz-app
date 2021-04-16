@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Question;
+use App\Models\Answer;
 
 class Result extends Model
 {
@@ -14,4 +16,12 @@ class Result extends Model
     	'answer_id',
     	'quiz_id',
     ];
+
+    public function question() {
+    	return $this->belongsTo(Question::class);
+    }
+
+    public function answer() {
+    	return $this->belongsTo(Answer::class);
+    }
 }
