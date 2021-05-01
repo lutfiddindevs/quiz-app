@@ -34,4 +34,8 @@ class Question extends Model
     public function getQuestions() {
         return Question::orderBy('created_at', $this->order)->with('quiz')->paginate($this->limit);
     }
+
+    public function getQuestionById($id) {
+        return Question::find($id);
+    }
 }
