@@ -51,7 +51,8 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        $question = (new Question)->getQuestionById($id);
+        return view('backend.question.show', compact('question'));
     }
 
     /**
