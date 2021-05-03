@@ -11,6 +11,12 @@
                         <li><a href="{{ route('quiz.index') }}"><i class="menu-icon icon-inbox"></i>View Quiz <b class="label green pull-right">
                             11</b> </a></li>
                     </ul>
+                    <ul class="widget widget-menu unstyled">
+                        <li><a href="{{ route('question.create') }}"><i class="menu-icon icon-bullhorn"></i>Create Question </a>
+                        </li>
+                        <li><a href="{{ route('question.index') }}"><i class="menu-icon icon-inbox"></i>View Question <b class="label green pull-right">
+                            17 new</b> </a></li>
+                    </ul>
                     <!--/.widget-nav-->
                     
                     
