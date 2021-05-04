@@ -90,6 +90,11 @@ class QuizController extends Controller
         return redirect()->route('quiz.index')->with('message', 'Quiz has been deleted successfully');
     }
 
+    public function question($id) {
+        $quizzes = Quiz::with('questions')->where('id', $id)->get();
+        return view('backend.quiz.question', compact('quizzes'));
+    }
+
     public function validateForm(Request $req) {
         return $this->validate($req, [
             'name' => 'required|string',
