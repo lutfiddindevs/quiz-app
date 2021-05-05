@@ -59,4 +59,24 @@ class User extends Authenticatable
     public function allUser() {
         return User::latest()->paginate($this->limit);
     }
+
+    public function findUser($id) {
+        return User::find($id);
+    }
+
+    public function updateUser($data, $id) {
+        $user = User::find($id);
+
+        if ($data['password']) {
+            $user->password = bcrypt($data['password']);
+            $user->visible_password = $data['password'];
+        }
+
+        $user->name = $data['name'];
+        $user->occupation = $data['occupation'];
+        $user->phone = $data['phone'];
+        $user->address = $data['address'];
+        $user->save();
+        return $user;
+    }
 }

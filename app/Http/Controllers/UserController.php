@@ -64,7 +64,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = (new User)->findUser($id);
+        return view('backend.user.edit', compact('user'));
     }
 
     /**
@@ -76,7 +77,12 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $user = (new User)->updateUser($request->all(), $id);
+        return redirect()->route('user.index')->with('message', 'User has been updated successfully!');
     }
 
     /**

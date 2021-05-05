@@ -25,7 +25,6 @@
                             <th>Phone Number</th>
                             <th></th>
                             <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,9 +38,6 @@
                             <td>{{ $user->occupation }}</td>
                             <td>{{ $user->address }}</td>
                             <td>{{ $user->phone }}</td>
-                            <td>
-                                <a href="{{ route('user.show', [$user->id]) }}"><button class="btn btn-primary">View</button></a>
-                            </td>
                             <td>
                                 <a href="{{ route('user.edit', [$user->id]) }}">
                                     <button class="btn btn-primary">Edit</button>
