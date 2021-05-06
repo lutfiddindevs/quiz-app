@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\ExamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,5 @@ Route::group(['middleware' => 'isAdmin'], function() {
 	Route::resource('question', 'QuestionController');
 	Route::resource('user', 'UserController');
 	Route::get('/quiz/{id}/questions', [QuizController::class, 'question'])->name('quiz.question');
+	Route::get('exam/assign', [ExamController::class, 'create'])->name('assign.exam');
 });
