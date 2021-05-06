@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Question;
 use App\Models\Quiz;
+use App\Models\User;
 
 class Quiz extends Model
 {
@@ -19,6 +20,10 @@ class Quiz extends Model
 
     public function questions() {
     	return $this->hasMany(Question::class);
+    }
+
+    public function users() {
+        return $this->belongsTomany(User::class, 'quiz_user');
     }
 
     public function storeQuiz($data) {
@@ -40,4 +45,11 @@ class Quiz extends Model
     public function deleteQuiz($id) {
     	return Quiz::find($id)->delete();
     } 
+
+    public function assignExam($data) {
+        $quizId = $data['quiz'];
+        $quiz = Quiz::find($quizId);
+        $userId = $data['user_id'];
+        return $quiz->users()->syncWithoutDetaching($userId);
+    }
 }

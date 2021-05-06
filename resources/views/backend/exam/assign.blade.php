@@ -8,7 +8,7 @@
             {{ Session::get('message') }}
         </div>
         @endif
-        <form action="{{ route('assign.exam') }}" method="post">
+        <form action="{{ route('exam.assign') }}" method="post">
             @csrf
             <div class="module">
                 <div class="module-head">

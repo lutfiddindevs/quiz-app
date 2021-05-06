@@ -34,4 +34,5 @@ Route::group(['middleware' => 'isAdmin'], function() {
 	Route::resource('user', 'UserController');
 	Route::get('/quiz/{id}/questions', [QuizController::class, 'question'])->name('quiz.question');
 	Route::get('exam/assign', [ExamController::class, 'create'])->name('assign.exam');
+	Route::post('exam/assign', [ExamController::class, 'assignExam'])->name('exam.assign');
 });
