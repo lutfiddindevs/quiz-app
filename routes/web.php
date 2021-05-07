@@ -36,4 +36,5 @@ Route::group(['middleware' => 'isAdmin'], function() {
 	Route::get('exam/assign', [ExamController::class, 'create'])->name('assign.exam');
 	Route::post('exam/assign', [ExamController::class, 'assignExam'])->name('exam.assign');
 	Route::get('exam/user', [ExamController::class, 'userExam'])->name('exam.view');
+	Route::post('exam/remove', [ExamController::class, 'removeExam'])->name('exam.remove');
 });
