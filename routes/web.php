@@ -21,7 +21,7 @@ use App\Http\Controllers\ExamController;
 Auth::routes([
 	'register' => false,
 	'reset' => false,
-	'verify' => false
+	'verify' => false,
 ]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

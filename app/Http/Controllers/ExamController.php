@@ -31,7 +31,7 @@ class ExamController extends Controller
             return redirect()->back()->with('message', 'This Quiz is already played by user, so, it can not be removed!');
         } else {
             $quiz->users()->detach($userId);
-            return redirect()->back()->with('message', 'Quiz has been removed successfully!');
+            return redirect()->back()->with('message', 'Quiz has been removed successfully and is not assigned to this user!');
         }
     }
 }
