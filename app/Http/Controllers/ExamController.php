@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Quiz;
+use App\Models\Question;
 use App\Models\Result;
 
 class ExamController extends Controller
@@ -33,5 +34,14 @@ class ExamController extends Controller
             $quiz->users()->detach($userId);
             return redirect()->back()->with('message', 'Quiz has been removed successfully and is not assigned to this user!');
         }
+    }
+
+    public function getQuizQuestions(Request $req, $quizId) {
+        $authUser = auth()->user()->id;
+        $quiz = Quiz::find($quizId);
+        $time = Quiz::where('id', $quizId)->value('minutes');
+        $quizQuestions = Question::where('quiz_id', $quizId)->with('answers')->get(); 
+        $authUserHasPlayedQuiz = Result::where(['user_id' => $authUser, 'quiz_id' => $quizId])->get();
+        return view('quiz', compact('quiz', 'time', 'quizQuestions', 'authUserHasPlayedQuiz'));
     }
 }

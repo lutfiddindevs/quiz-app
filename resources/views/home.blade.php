@@ -6,6 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
+                
                     @if($isQuizAssigned)
                     @foreach($quizzes as $quiz)
                 <div class="card-body">
@@ -15,7 +16,7 @@
                     <p>Number of Questions: {{ $quiz->questions->count() }}</p>
                     <p>
                         @if(!in_array($quiz->id, $wasQuizCompleted))
-                        <a href=""><button class="btn btn-success">Start Quiz</button></a>
+                        <a href="/quiz/{{ $quiz->id }}"><button class="btn btn-success">Start Quiz</button></a>
                         @else
                             <span class="float-right">Completed</span>
                         @endif

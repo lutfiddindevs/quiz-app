@@ -25,6 +25,7 @@ Auth::routes([
 ]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/quiz/{quizId}', [ExamController::class, 'getQuizQuestions'])->middleware('auth');
 Route::group(['middleware' => 'isAdmin'], function() {
 	Route::get('/', function () {
 	    return view('admin.index');

@@ -16,7 +16,6 @@
 
 <script>
     export default {
-        props:['quizid']
         mounted() {
             console.log('Component mounted.')
         }
