@@ -2,13 +2,13 @@
 
 @section('content')
 
-<example-component
+<quiz-component
 :times = "{{ $quiz->minutes }}"
 :quizId = "{{ $quiz->id }}"
 :quiz-questions = "{{ $quizQuestions }}"
 :has-quiz-played = "{{ $authUserHasPlayedQuiz }}"
 >
 	
-</example-component>
+</quiz-component>
 
 @endsection
