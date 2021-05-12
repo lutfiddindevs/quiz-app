@@ -73,4 +73,9 @@ class ExamController extends Controller
             ['answer_id' => $answerId]
         );
     }
+
+    public function viewResult($userId, $quizId) {
+        $results = Result::where('user_id', $userId)->where('quiz_id', $quizId)->get();
+        return view('result-detail', compact('results'));
+    }
 }
