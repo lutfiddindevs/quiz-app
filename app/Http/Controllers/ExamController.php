@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\Result;
+use DB;
 
 class ExamController extends Controller
 {
@@ -38,10 +39,25 @@ class ExamController extends Controller
 
     public function getQuizQuestions(Request $req, $quizId) {
         $authUser = auth()->user()->id;
+
+        // check if user has been assigned a particular quiz
+        $userId = DB::table('quiz_user')->where('user_id', $authUser)->pluck('quiz_id')->toArray();
+        if (!in_array($quizId, $userId)) {
+            return redirect()->to('/home')->with('error', 'You are not assigned this quiz');
+        }
+
         $quiz = Quiz::find($quizId);
         $time = Quiz::where('id', $quizId)->value('minutes');
         $quizQuestions = Question::where('quiz_id', $quizId)->with('answers')->get(); 
         $authUserHasPlayedQuiz = Result::where(['user_id' => $authUser, 'quiz_id' => $quizId])->get();
+
+        // has user played particular quiz
+        $wasCompleted = Result::where('user_id', $authUser)->whereIn('quiz_id', (new Quiz)->hasQuizAttempted())->pluck('quiz_id')->toArray();
+
+        if (in_array($quizId, $wasCompleted)) {
+            return redirect()->to('/home')->with('error', 'You have already participated in this exam');
+        }
+
         return view('quiz', compact('quiz', 'time', 'quizQuestions', 'authUserHasPlayedQuiz'));
     }
 
