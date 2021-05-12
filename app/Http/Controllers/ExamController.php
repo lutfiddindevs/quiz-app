@@ -78,4 +78,9 @@ class ExamController extends Controller
         $results = Result::where('user_id', $userId)->where('quiz_id', $quizId)->get();
         return view('result-detail', compact('results'));
     }
+
+    public function result() {
+        $quizzes = Quiz::get();
+        return view('backend.result.index', compact('quizzes'));
+    }
 }
