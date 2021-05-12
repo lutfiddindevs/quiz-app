@@ -1911,12 +1911,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['quizid', 'quizQuestions', 'hasQuizPlayed', 'times'],
   data: function data() {
     return {
       questions: this.quizQuestions,
-      questionIndex: 0
+      questionIndex: 0,
+      userResponses: Array(this.quizQuestions.length).fill(false),
+      currentQuestion: 0,
+      currentAnswer: 0
     };
   },
   mounted: function mounted() {
@@ -1928,6 +1942,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     prev: function prev() {
       this.questionIndex--;
+    },
+    choices: function choices(question, answer) {
+      this.currentAnswer = answer, this.currentQuestion = question;
+    },
+    score: function score() {
+      return this.userResponses.filter(function (val) {
+        return val === true;
+      }).length;
     }
   }
 });
@@ -37647,7 +37669,43 @@ var render = function() {
                         _vm._l(question.answers, function(choice) {
                           return _c("li", [
                             _c("label", [
-                              _c("input", { attrs: { type: "radio" } }),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.userResponses[index],
+                                    expression: "userResponses[index]"
+                                  }
+                                ],
+                                attrs: { type: "radio", name: index },
+                                domProps: {
+                                  value:
+                                    choice.is_correct == true
+                                      ? true
+                                      : choice.answer,
+                                  checked: _vm._q(
+                                    _vm.userResponses[index],
+                                    choice.is_correct == true
+                                      ? true
+                                      : choice.answer
+                                  )
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.choices(question.id, choice.id)
+                                  },
+                                  change: function($event) {
+                                    return _vm.$set(
+                                      _vm.userResponses,
+                                      index,
+                                      choice.is_correct == true
+                                        ? true
+                                        : choice.answer
+                                    )
+                                  }
+                                }
+                              }),
                               _vm._v(
                                 _vm._s(choice.answer) +
                                   "\n                            "
@@ -37663,29 +37721,74 @@ var render = function() {
               }),
               _vm._v(" "),
               _c(
-                "button",
+                "div",
                 {
-                  staticClass: "btn btn-success float-right",
-                  on: {
-                    click: function($event) {
-                      return _vm.prev()
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.questionIndex != _vm.questions.length,
+                      expression: "questionIndex!=questions.length"
                     }
-                  }
+                  ]
                 },
-                [_vm._v("Prev")]
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success float-right",
+                      on: {
+                        click: function($event) {
+                          return _vm.prev()
+                        }
+                      }
+                    },
+                    [_vm._v("Prev")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      on: {
+                        click: function($event) {
+                          return _vm.next()
+                        }
+                      }
+                    },
+                    [_vm._v("Next")]
+                  )
+                ]
               ),
               _vm._v(" "),
               _c(
-                "button",
+                "div",
                 {
-                  staticClass: "btn btn-success",
-                  on: {
-                    click: function($event) {
-                      return _vm.next()
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.questionIndex === _vm.questions.length,
+                      expression: "questionIndex===questions.length"
                     }
-                  }
+                  ]
                 },
-                [_vm._v("Next")]
+                [
+                  _c(
+                    "p",
+                    [
+                      _c("center", [
+                        _vm._v(
+                          "You got: " +
+                            _vm._s(_vm.score()) +
+                            "/" +
+                            _vm._s(_vm.questions.length)
+                        )
+                      ])
+                    ],
+                    1
+                  )
+                ]
               )
             ],
             2
