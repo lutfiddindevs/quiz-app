@@ -21,7 +21,7 @@
                     <p>Number of Questions: {{ $quiz->questions->count() }}</p>
                     <p>
                         @if(!in_array($quiz->id, $wasQuizCompleted))
-                        <a href="/quiz/{{ $quiz->id }}"><button class="btn btn-success">Start Quiz</button></a>
+                        <a href="user/quiz/{{ $quiz->id }}"><button class="btn btn-success">Start Quiz</button></a>
                         @else
                         <a href="/result/user/{{auth()->user()->id}}/quiz/{{$quiz->id}}">View Result</a>
                             <span class="float-right">Completed</span>
