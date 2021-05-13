@@ -34,7 +34,7 @@
                                 <a href="{{ route('quiz.question', [$quiz->id]) }}"><button class="btn btn-inverse">View Questions</button></a>
                             </td>
                             <td>
-                               <a href="">
+                               <a href="{{ route('result.view', [$user->id, $quiz->id]) }}">
                                    <button class="btn btn-primary">View Result</button>
                                </a>
                             </td>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Quiz;
 use App\Models\Question;
+use App\Models\Answer;
 use App\Models\Result;
 use DB;
 
@@ -82,5 +83,28 @@ class ExamController extends Controller
     public function result() {
         $quizzes = Quiz::get();
         return view('backend.result.index', compact('quizzes'));
+    }
+
+    public function userQuizResult($userId, $quizId) {
+        $results = Result::where('user_id', $userId)->where('quiz_id', $quizId)->get();
+        $totalQuestions = Question::where('quiz_id', $quizId)->count();
+        $attemptedQuestions = Result::where('quiz_id', $quizId)->where('user_id', $userId)->count();
+        $quiz = Quiz::where('id', $quizId)->get();
+        $ans = [];
+        foreach ($results as $answer) {
+             array_push($ans, $answer->answer_id);
+        }
+        $userCorrectedAnswers = Answer::whereIn('id', $ans)->where('is_correct', 1)->count(); 
+        $userWrongAnswers = $totalQuestions - $userCorrectedAnswers;
+
+        if ($attemptedQuestions) {
+            $percentage = ($userCorrectedAnswers / $totalQuestions)*100;
+        } else {
+            $percentage = 0;
+        }
+
+        
+        return view('backend.result.result', compact('results', 'totalQuestions', 'attemptedQuestions', 'userCorrectedAnswers', 'userWrongAnswers', 'percentage', 'quiz'));
+
     }
 }
